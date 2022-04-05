@@ -1,7 +1,7 @@
 import { Component } from "react";
-import { Loader } from "./Loader";
-import { Search } from "../components/Search";
-import { Movies } from "../components/Movies";
+import { Loader } from "../Loader/Loader";
+import { Search } from "../../components/Search/Search";
+import { Movies } from "../../components/Movies/Movies";
 
 import "./Main.css";
 

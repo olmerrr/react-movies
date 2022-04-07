@@ -12,23 +12,26 @@ export class Main extends Component {
       movies: [],
     };
   }
+
   componentDidMount() {
-    fetch("http://www.omdbapi.com/?i=tt3896198&apikey=b2fd5f01&s=max")
+    fetch('http://www.omdbapi.com/?apikey=b2fd5f01&s=max')
+      .then(response => response.json())
+      .then((data => this.setState({ movies: data.Search })))
+  }
+
+  searchMovies = (str, type = 'all') => {
+    fetch(`http://www.omdbapi.com/?apikey=b2fd5f01&s=${str}${type !== 'all' ? `&type=${type}` : ''}`)
       .then((response) => response.json())
       .then((data) => this.setState({ movies: data.Search }));
   }
 
-  searchMovies = (str) => {
-    fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=b2fd5f01&s=${str}`)
-      .then((response) => response.json())
-      .then((data) => this.setState({ movies: data.Search }));
-  }
   render() {
     const { movies } = this.state;
     return (
       <main className="container content">
           <Search searchMovies={this.searchMovies}/>
 
+      
         <div>
           {movies.length ? (
             <Movies movies={movies}/>
@@ -36,6 +39,7 @@ export class Main extends Component {
             <Loader/>
           )}
         </div>
+      
       </main>
     );
   }

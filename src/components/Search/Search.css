@@ -3,3 +3,12 @@
   top: 0;
   right: 0;
 }
+
+.search-actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.search-actions__label:not(:last-child) {
+  margin-right: 1rem;
+}

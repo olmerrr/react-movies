@@ -1,0 +1,11 @@
+.footer {
+  height: 9vh;
+  background-color: #25344d;
+}
+
+.footer-copyright {
+  font-size: 1.4rem;
+  color: #fff;
+  text-align: left;
+  padding: 16px 0;
+}

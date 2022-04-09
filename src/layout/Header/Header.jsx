@@ -10,13 +10,13 @@ export function Header() {
           </a>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li>
-              <a href="sass.html">Sass</a>
+              <a href="https://sass-lang.com">Sass</a>
             </li>
             <li>
-              <a href="badges.html">Components</a>
+              <a href="https://uk.reactjs.org">React</a>
             </li>
             <li>
-              <a href="collapsible.html">JavaScript</a>
+              <a href="https://developer.mozilla.org/">JavaScript</a>
             </li>
           </ul>
         </div>

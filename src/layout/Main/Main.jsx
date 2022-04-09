@@ -1,45 +1,44 @@
-import { Component } from "react";
-import { Loader } from "../Loader/Loader";
-import { Search } from "../../components/Search/Search";
-import { Movies } from "../../components/Movies/Movies";
+import { Component } from 'react';
+import { Loader } from '../Loader/Loader';
+import { Search } from '../../components/Search/Search';
+import { Movies } from '../../components/Movies/Movies';
 
-import "./Main.css";
+import './Main.css';
 
+const API_KEY = process.env.REACT_APP_API_KEY;
 export class Main extends Component {
   constructor() {
     super();
     this.state = {
+      isLoading: true,
       movies: [],
     };
   }
 
   componentDidMount() {
-    fetch('http://www.omdbapi.com/?apikey=b2fd5f01&s=max')
-      .then(response => response.json())
-      .then((data => this.setState({ movies: data.Search })))
+    fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=max`)
+      .then((response) => response.json())
+      .then((data) => this.setState({ movies: data.Search, isLoading: false }));
   }
 
   searchMovies = (str, type = 'all') => {
-    fetch(`http://www.omdbapi.com/?apikey=b2fd5f01&s=${str}${type !== 'all' ? `&type=${type}` : ''}`)
+    this.setState({ loading: true });
+    fetch(
+      `http://www.omdbapi.com/?apikey=${API_KEY}&s=${str}${
+        type !== 'all' ? `&type=${type}` : ''
+      }`
+    )
       .then((response) => response.json())
-      .then((data) => this.setState({ movies: data.Search }));
-  }
+      .then((data) => this.setState({ movies: data.Search, isLoading: false }));
+  };
 
   render() {
-    const { movies } = this.state;
+    const { isLoading, movies } = this.state;
     return (
-      <main className="container content">
-          <Search searchMovies={this.searchMovies}/>
+      <main className='container content'>
+        <Search searchMovies={this.searchMovies} />
 
-      
-        <div>
-          {movies.length ? (
-            <Movies movies={movies}/>
-          ) : (
-            <Loader/>
-          )}
-        </div>
-      
+        <div>{isLoading ? <Loader /> : <Movies movies={movies} />}</div>
       </main>
     );
   }

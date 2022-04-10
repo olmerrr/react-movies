@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import { Loader } from '../Loader/Loader';
 import { Search } from '../../components/Search/Search';
 import { Movies } from '../../components/Movies/Movies';
@@ -6,48 +6,41 @@ import { Movies } from '../../components/Movies/Movies';
 import './Main.css';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
-export class Main extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isLoading: true,
-      movies: [],
-    };
-  }
 
-  componentDidMount() {
+export const Main = () => {
+
+  const [isLoading, setLoading] = useState(true);
+  const [movies, setMovies] = useState([]);
+  
+  useEffect(() => {
     fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=max`)
       .then((response) => response.json())
-      .then((data) => this.setState({ movies: data.Search, isLoading: false }))
-      // .catch((err) => {
-      //   console.error(err);
-      //   this.setState({isLoading: false})
-      // });
-    }
+      .then((data) => (
+        setMovies(data.Search),
+        setLoading(false)
+      ))
+  }, [])
 
-  searchMovies = (str, type = 'all') => {
-    this.setState({ loading: true });
+  const searchMovies = (str, type = 'all') => {
+    setLoading(true);
     fetch(
       `https://www.omdbapi.com/?apikey=${API_KEY}&s=${str}${
         type !== 'all' ? `&type=${type}` : ''
       }`
     )
       .then((response) => response.json())
-      .then((data) => this.setState({ movies: data.Search, isLoading: false }))
+      .then((data) =>(setMovies(data.Search), setLoading(false)))
       .catch((err) => {
         console.error(err);
-        this.setState({isLoading: false})
+        (setLoading(false))
       });
   };
 
-  render() {
-    const { isLoading, movies } = this.state;
     return (
       <main className='container content'>
-        <Search searchMovies={this.searchMovies} />
+        <Search searchMovies={searchMovies} />
 
         <div>{isLoading ? <Loader /> : <Movies movies={movies} />}</div>
       </main>
     );
   }
-}

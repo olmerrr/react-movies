@@ -10,14 +10,10 @@ export function Search({ searchMovies = Function.prototype }) {
 
   const searchRef = useRef(null);
 
-  // searchRef = React.createRef();
-
   useEffect(() => {
     searchRef.current.focus();
   });
-  // componentDidMount() {
-  //   this.searchRef.current.focus();
-  // }
+ 
 
   const handleFilter = (event) => {
     setType(event.target.dataset.type);
